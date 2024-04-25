@@ -1,0 +1,31 @@
+pipeline {
+    agent any
+    stages {
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    // Build Docker image containing Dastardly
+                    docker.build('dastardly-image:latest', '-f C:\Program Files\Docker\Docker\resources\bin\docker.exe')
+                }
+            }
+        }
+        stage('Run Security Tests') {
+            steps {
+                script {
+                    // Run Dastardly container based on the built image
+                    def dastardlyContainer = docker.image('dastardly-image:latest').run('--rm', 'dastardly', 'test', '
+https://testingxperts46-dev-ed.develop.my.salesforce.com/')
+
+                    // Wait for Dastardly container to finish
+                    def exitCode = dastardlyContainer.wait()
+                    // Check the exit code to determine success or failure
+                    if (exitCode == 0) {
+                        echo 'Dastardly tests passed successfully'
+                    } else {
+                        error 'Dastardly tests failed'
+                    }
+                }
+            }
+        }
+    }
+}
