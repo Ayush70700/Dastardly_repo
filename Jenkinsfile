@@ -22,14 +22,15 @@ pipeline {
             steps {
                 script {
                     // Run the Dastardly scan in Docker
-                    bat """
-                        docker run \
-                        --rm \
-                        -v %cd%:/reports \
-                        ${dastardlyImage} \
-                        --config \"{\\\"targetURL\\\": \\\"${targetUrl}\\\"}\" \
-                        --output-file \"/reports/${reportPath}\"
-                    """
+                    // bat """
+                    //     docker run \
+                    //     --rm \
+                    //     -v %cd%:/reports \
+                    //     ${dastardlyImage} \
+                    //     --config \"{\\\"targetURL\\\": \\\"${targetUrl}\\\"}\" \
+                    //     --output-file \"/reports/${reportPath}\"
+                    // """
+                    bat "docker run --rm $DdastardlyImage dastardly test $targetUrl
                 }
             }
         }
