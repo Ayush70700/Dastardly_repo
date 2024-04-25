@@ -1,7 +1,7 @@
 pipeline {
   agent any
   environment {
-    DASTARDLY_TARGET_URL='https://testingxperts46-dev-ed.develop.lightning.force.com/lightning/setup/SetupOneHome/home'
+    DASTARDLY_TARGET_URL='https://testingxperts46-dev-ed.develop.my.salesforce.com/'
     IMAGE_WITH_TAG='public.ecr.aws/portswigger/dastardly:latest'
     JUNIT_TEST_RESULTS_FILE='dastardly-report.xml'
   }
