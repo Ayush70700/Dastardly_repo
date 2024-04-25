@@ -1,0 +1,50 @@
+pipeline {
+    agent{
+        label 'docker'
+    }
+
+    environment {
+
+        DOCKER_IMAGE = 'your-dastardly-image:latest'
+
+        WEBSITE_URL = 'https://testingxperts46-dev-ed.develop.my.salesforce.com/' // Change this to your target website URL
+
+    }
+
+    stages {
+
+        stage('Build Docker Image') {
+
+            steps {
+
+                script {
+
+                    // Build Docker image containing Dastardly
+
+                    bat 'docker build -t $DOCKER_IMAGE -f C:\Program Files\Docker\Docker\resources\bin'
+
+                }
+
+            }
+
+        }
+
+        stage('Run Security Tests') {
+
+            steps {
+
+                script {
+
+                    // Run Dastardly container based on the built image
+
+                    bat "docker run --rm $DOCKER_IMAGE dastardly test $WEBSITE_URL"
+
+                }
+
+            }
+
+        }
+
+    }
+
+}
