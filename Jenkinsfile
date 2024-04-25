@@ -30,7 +30,7 @@ pipeline {
                     //     --config \"{\\\"targetURL\\\": \\\"${targetUrl}\\\"}\" \
                     //     --output-file \"/reports/${reportPath}\"
                     // """
-                    bat "docker run --rm $dastardlyImage dastardly test $targetUrl
+                    bat "docker run --rm $dastardlyImage dastardly test $targetUrl"
                 }
             }
         }
