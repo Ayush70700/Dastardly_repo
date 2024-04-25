@@ -1,8 +1,8 @@
 pipeline {
-    agent{
-        label 'docker'
-    }
-
+    // agent{
+    //     label 'docker'
+    // }
+    agent any
     environment {
 
         DOCKER_IMAGE = 'public.ecr.aws/portswigger/dastardly:latest'
