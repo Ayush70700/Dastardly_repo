@@ -21,7 +21,7 @@ pipeline {
 
                     // Build Docker image containing Dastardly
 
-                    bat 'docker build -t $DOCKER_IMAGE', '-f C:\Program Files\Docker\Docker\resources\bin'
+                    bat 'docker build -t $DOCKER_IMAGE', '-f "C:\Program Files\Docker\Docker\resources\bin"'
 
                 }
 
