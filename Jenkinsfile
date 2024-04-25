@@ -6,7 +6,7 @@ pipeline {
             steps {
                 script {
                     // Docker image for Dastardly
-                    def dastardlyImage = 'portswigger/dastardly:latest'
+                    def dastardlyImage = 'public.ecr.aws/portswigger/dastardly:latest'
                     // Your target URL to scan
                     def targetUrl = 'https://testingxperts46-dev-ed.develop.my.salesforce.com/' 
                     // Path for the output report
