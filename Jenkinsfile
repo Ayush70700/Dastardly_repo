@@ -67,9 +67,9 @@ pipeline {
       steps {
         cleanWs()
         bat '''
-          docker run --rm --user $(id -u) -v $WORKSPACE:$WORKSPACE:rw \
+          docker run --rm --user $(id -u) -v %WORKSPACE%:%WORKSPACE%:rw \
           -e DASTARDLY_TARGET_URL=https://testingxperts46-dev-ed.develop.my.salesforce.com/ \
-          -e DASTARDLY_OUTPUT_FILE=$WORKSPACE/dastardly-report.xml \
+          -e DASTARDLY_OUTPUT_FILE=%WORKSPACE%/dastardly-report.xml \
           public.ecr.aws/portswigger/dastardly:latest
         '''
       }
