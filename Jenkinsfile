@@ -8,6 +8,7 @@ pipeline {
         DOCKER_IMAGE = 'public.ecr.aws/portswigger/dastardly:latest'
 
         WEBSITE_URL = 'https://testingxperts46-dev-ed.develop.my.salesforce.com/' // Change this to your target website URL
+        DOCKER_PATH = 'C:\Program Files\Docker\Docker\resources\bin'
 
     }
 
@@ -21,7 +22,7 @@ pipeline {
 
                     // Build Docker image containing Dastardly
 
-                    bat 'docker build -t $DOCKER_IMAGE', '-f "C:\Program Files\Docker\Docker\resources\bin"'
+                    bat 'docker build -t $DOCKER_IMAGE -f $DOCKER_PATH'
 
                 }
 
