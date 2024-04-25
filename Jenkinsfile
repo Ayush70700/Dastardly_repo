@@ -75,7 +75,6 @@ pipeline {
       }
     }
 }
-  }
   post {
     always {
       junit testResults: "${JUNIT_TEST_RESULTS_FILE}", skipPublishingChecks: true
