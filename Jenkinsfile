@@ -22,7 +22,8 @@ pipeline {
 
                     // Build Docker image containing Dastardly
 
-                    bat 'docker build -t $DOCKER_IMAGE -f $DOCKER_PATH'
+                    // bat 'docker build -t $DOCKER_IMAGE -f $DOCKER_PATH'
+                    bat 'docker build -t $DOCKER_IMAGE'
 
                 }
 
