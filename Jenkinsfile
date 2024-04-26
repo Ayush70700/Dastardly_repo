@@ -23,7 +23,7 @@ pipeline {
                 script {
                     // Run the Dastardly scan in Docker
                     bat """
-                        docker run --rm -v %cd%:/reports ${dastardlyImage} --config "{"targetURL":"${targetUrl}"}" --output-file "/reports/${reportPath}\"
+                        docker run --rm -v ${pwd}:/reports ${dastardlyImage} --config "{"targetURL":"${targetUrl}"}" --output-file "/reports/${reportPath}\"
                     """
                     
                 }
