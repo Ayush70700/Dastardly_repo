@@ -1,119 +1,119 @@
-pipeline {
-    agent any
-
-    stages {
-        stage('Prepare') {
-            steps {
-                script {
-                    // Docker image for Dastardly
-                    def dastardlyImage = 'public.ecr.aws/portswigger/dastardly:latest'
-                    // Your target URL to scan
-                    def targetUrl = 'https://testingxperts46-dev-ed.develop.my.salesforce.com/' 
-                    // Path for the output report
-                    def reportPath = 'dastardly-report.html'
-                    
-                    // Pull the Dastardly image from Docker Hub
-                    bat "docker pull ${dastardlyImage}"
-                }
-            }
-        }
-
-        stage('Run Dastardly Scan') {
-            steps {
-                script {
-                    // Run the Dastardly scan in Docker
-                    bat """
-                        docker run \
-                        --rm \
-                        -v %cd%:/reports \
-                        ${dastardlyImage} \
-                        --config \"{\\\"targetURL\\\": \\\"${targetUrl}\\\"}\" \
-                        --output-file \"/reports/${reportPath}\"
-                    """
-                    
-                }
-            }
-        }
-
-        stage('Archive Report') {
-            steps {
-                // Archive the report as a Jenkins artifact
-                archiveArtifacts artifacts: 'dastardly-report.html', fingerprint: true
-            }
-        }
-    }
-
-    post {
-        always {
-            echo 'Pipeline execution completed.'
-        }
-        success {
-            echo 'Dastardly scan was successful.'
-        }
-        failure {
-            echo 'Dastardly scan failed. Check logs for details.'
-        }
-    }
-}
-
-
-
-
-
-
-
-//2. pipeline {
-//     // agent{
-//     //     label 'docker'
-//     // }
+// pipeline {
 //     agent any
-//     environment {
-
-//         DOCKER_IMAGE = 'public.ecr.aws/portswigger/dastardly:latest'
-
-//         WEBSITE_URL = 'https://testingxperts46-dev-ed.develop.my.salesforce.com/' // Change this to your target website URL
-//         DOCKER_PATH = 'C:/Program Files/Docker/Docker/resources/bin'
-
-//     }
 
 //     stages {
-
-//         stage('Build Docker Image') {
-
+//         stage('Prepare') {
 //             steps {
-
 //                 script {
-
-//                     // Build Docker image containing Dastardly
-
-//                     // bat 'docker build -t $DOCKER_IMAGE -f $DOCKER_PATH'
-//                     bat 'docker build -t public.ecr.aws/portswigger/dastardly:latest'
-
+//                     // Docker image for Dastardly
+//                     def dastardlyImage = 'public.ecr.aws/portswigger/dastardly:latest'
+//                     // Your target URL to scan
+//                     def targetUrl = 'https://testingxperts46-dev-ed.develop.my.salesforce.com/' 
+//                     // Path for the output report
+//                     def reportPath = 'dastardly-report.html'
+                    
+//                     // Pull the Dastardly image from Docker Hub
+//                     bat "docker pull ${dastardlyImage}"
 //                 }
-
 //             }
-
 //         }
 
-//         stage('Run Security Tests') {
-
+//         stage('Run Dastardly Scan') {
 //             steps {
-
 //                 script {
-
-//                     // Run Dastardly container based on the built image
-
-//                     bat "docker run --rm $DOCKER_IMAGE dastardly test $WEBSITE_URL"
-
+//                     // Run the Dastardly scan in Docker
+//                     bat """
+//                         docker run \
+//                         --rm \
+//                         -v %cd%:/reports \
+//                         ${dastardlyImage} \
+//                         --config \"{\\\"targetURL\\\": \\\"${targetUrl}\\\"}\" \
+//                         --output-file \"/reports/${reportPath}\"
+//                     """
+                    
 //                 }
-
 //             }
-
 //         }
 
+//         stage('Archive Report') {
+//             steps {
+//                 // Archive the report as a Jenkins artifact
+//                 archiveArtifacts artifacts: 'dastardly-report.html', fingerprint: true
+//             }
+//         }
 //     }
 
+//     post {
+//         always {
+//             echo 'Pipeline execution completed.'
+//         }
+//         success {
+//             echo 'Dastardly scan was successful.'
+//         }
+//         failure {
+//             echo 'Dastardly scan failed. Check logs for details.'
+//         }
+//     }
 // }
+
+
+
+
+
+
+
+pipeline {
+    // agent{
+    //     label 'docker'
+    // }
+    agent any
+    environment {
+
+        DOCKER_IMAGE = 'public.ecr.aws/portswigger/dastardly:latest'
+
+        WEBSITE_URL = 'https://testingxperts46-dev-ed.develop.my.salesforce.com/' // Change this to your target website URL
+        DOCKER_PATH = 'C:/Program Files/Docker/Docker/resources/bin'
+
+    }
+
+    stages {
+
+        stage('Build Docker Image') {
+
+            steps {
+
+                script {
+
+                    // Build Docker image containing Dastardly
+
+                    // bat 'docker build -t $DOCKER_IMAGE -f $DOCKER_PATH'
+                    bat 'docker build -t public.ecr.aws/portswigger/dastardly:latest .'
+
+                }
+
+            }
+
+        }
+
+        stage('Run Security Tests') {
+
+            steps {
+
+                script {
+
+                    // Run Dastardly container based on the built image
+
+                    bat "docker run --rm $DOCKER_IMAGE dastardly test $WEBSITE_URL"
+
+                }
+
+            }
+
+        }
+
+    }
+
+}
 
 
 // pipeline {
